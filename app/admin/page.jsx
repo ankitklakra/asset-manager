@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import useSpinner from '../utils/useSpinner'
@@ -17,17 +17,48 @@ const options = [
 ];
 
 export default function Admin() {
-
+    const router = useRouter()
     const [name, setDocName] = useState('');
     const [description, setDescription] = useState('');
     const [imageError, setImageError] = useState('');
     const [uploadError, setUploadError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
+    const [resource, setFile] = useState(null);
     const [filetype, setFileType] = useState('');
     const [loader, showLoader, hideLoader] = useSpinner();
 
     const [selectedOption, setSelectedOption] = useState(null);
     const [customInput, setCustomInput] = useState('');
+
+    function GetUserUid() {
+
+        const [uid, setUid] = useState(null);
+        useEffect(() => {
+            showLoader();
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    setUid(user.uid);
+                    const docRef = fs.collection('Admin').doc(user.uid)
+                    docRef.get().then((doc) => {
+                        if (doc.exists) {
+                            console.log('success')
+                            hideLoader();
+                        } else {
+                            console.log('not user')
+                            router.push('/');
+                            hideLoader();
+                        }
+                    })
+                } else {
+                    console.log('not user')
+                    router.push('/');
+                    hideLoader();
+                }
+            })
+        }, [])
+        return uid;
+    }
+    const uid = GetUserUid();
 
     const handleChange = (selectedOption) => {
         setSelectedOption(selectedOption);
@@ -39,6 +70,7 @@ export default function Admin() {
 
     function handleFileChange(event) {
         const file = event.target.files[0];
+        setFile(file);
 
         if (file) {
             const fileName = file.name;
@@ -47,17 +79,17 @@ export default function Admin() {
         }
     }
 
-    const uploadData = () => {
+    const uploadData = (e) => {
         e.preventDefault();
         showLoader();
 
         const storageRef = storage.ref();
         const timeStamp = String(Date.now());
-        const filePathAndName = `${filetype}/${fileName}${timeStamp}`;
+        const filePathAndName = `Doc/Doc_${timeStamp}`;
         const fileRef = storageRef.child(filePathAndName);
 
         //Upload Doc
-        fileRef.put(file).then((snapshot) => {
+        fileRef.put(resource).then((snapshot) => {
             // Get the download URL of the uploaded doc
             snapshot.ref.getDownloadURL().then((downloadURL) => {
                 const downloadUri = downloadURL;
@@ -70,11 +102,11 @@ export default function Admin() {
                 // Create a data object with the fields to be stored in Firestore
                 const data = {
                     docUri: downloadUri,
-                    category: selectedOption,
+                    category: selectedOption.value,
                     doctype: filetype,
                     docid: docsRefId,
                     userid: uid,
-                    title: title,
+                    title: name,
                     description: description
                 };
 
@@ -83,9 +115,9 @@ export default function Admin() {
                     .then(() => {
                         hideLoader();
                         setSuccessMsg('Document uploaded successfully');
-                        setTitle('');
+                        setDocName('');
                         setDescription('');
-                        document.getElementById('file').value = '';
+                        // document.getElementById('file').value = '';
                         setImageError('');
                         setUploadError('');
                         setTimeout(() => {
@@ -95,9 +127,9 @@ export default function Admin() {
                     .catch((error) => {
                         console.error('Error uploading document:', error);
                         hideLoader();
-                        setTitle('');
+                        setDocName('');
                         setDescription('');
-                        document.getElementById('file').value = '';
+                        // document.getElementById('file').value = '';
                         setImageError('');
                         setUploadError('');
                         setTimeout(() => {
@@ -108,9 +140,9 @@ export default function Admin() {
         }).catch((error) => {
             console.error('Error uploading image:', error);
             hideLoader();
-            setTitle('');
+            setDocName('');
             setDescription('');
-            document.getElementById('file').value = '';
+            // document.getElementById('file').value = '';
             setImageError('');
             setUploadError('');
             setTimeout(() => {
