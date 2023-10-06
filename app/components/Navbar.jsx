@@ -1,6 +1,7 @@
 "use client";
 import React from 'react'
 import { auth, fs, storage } from '../config'
+import Link from 'next/link';
 
 export default function Navbar() {
     const handleLogout = () => {
@@ -23,10 +24,10 @@ export default function Navbar() {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" />
+                              <Link href="/admin"> <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" /> </Link> 
                             </div>
                         </label>
-                        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                        {/* <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                             <li>
                                 <a className="justify-between">
                                     Profile
@@ -35,7 +36,7 @@ export default function Navbar() {
                             </li>
                             <li><a>Settings</a></li>
                             <li><a onClick={handleLogout}>Logout</a></li>
-                        </ul>
+                        </ul> */}
                     </div>
                 </div>
             </div>
