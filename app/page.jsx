@@ -4,6 +4,8 @@ import Cards from "./components/Cards";
 import Navbar from "./components/Navbar";
 import { Products } from './utils/Products';
 import { auth, fs, storage } from './config'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 export default function Home() {
 
   const [searchterm, setSearch] = useState('');
@@ -70,10 +72,12 @@ export default function Home() {
       <Navbar />
       {/* <Cards/> */}
       <div>
-        <input type="text" placeholder="Search" className="input input-bordered w-full max-w-lg"
+      
+        <input type="text" placeholder="Search" className="input input-bordered rounded-lg  w-full max-w-lg"
           onChange={(e) => setSearch(e.target.value)} value={searchterm} />
-        <button className="btn btn-outline" onClick={handleSearch}>
-          Search
+        <button className='pe-6 mr-4' onClick={handleSearch}>
+        <FontAwesomeIcon icon={faSearch} className='text-gray-500 mr-2' />
+        
         </button>
       </div>
 
