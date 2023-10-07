@@ -17,7 +17,8 @@
     "react": "^18",
     "react-doc-viewer": "^0.1.5",
     "react-dom": "^18",
-    "react-select": "^5.7.7"
+    "react-select": "^5.7.7",
+    "styled-jsx": "^5.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^10",
