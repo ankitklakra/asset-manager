@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { auth, fs, storage } from '../config';
-import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
 export default function Page() {
 
   const [title, setTitle] = useState('');
@@ -62,7 +61,7 @@ export default function Page() {
   };
 
   return (
-    <div>
+    <div >
       {copySuccess && <><div className="alert alert-success">
         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         <span>Link copied to clipboard!</span>
@@ -72,13 +71,12 @@ export default function Page() {
         <span>{errmsg}</span>
       </div></>}
 
-      <p>Title {title}</p>
-      <p>Description {desc}</p>
+     
 
-      <button className="btn btn-outline btn-info" onClick={handleDownload}>Download</button>
-      <button className="btn btn-outline btn-success" onClick={handleCopyLink}>Copy Link</button>
-
-      <div className="m-20">
+      
+      <p className='text-left justify-start ps-8 py-8 font-bold'>Title: {title}</p>
+      
+      <div className="mt-10 ml-5 mr-5 mb-5">
         {docuri && (
           <iframe
             src={docuri}
@@ -88,9 +86,16 @@ export default function Page() {
             title="Document Viewer"
           ></iframe>
         )}
+
       </div>
+      <p className='text-left font-medium px-8 sm:text-center md:text-right lg:text-justify xl:text-center'>Description: {desc}</p>
+      <div className='flex justify-end pr-8'>
+  <button className="btn btn-outline btn-info mr-4" onClick={handleDownload}>Download</button>
+  <button className="btn btn-outline btn-success" onClick={handleCopyLink}>Copy Link</button>
+</div>
 
 
     </div>
+    
   );
 }
