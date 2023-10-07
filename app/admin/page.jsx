@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import useSpinner from '../utils/useSpinner'
@@ -23,6 +23,7 @@ export default function Admin() {
     const [imageError, setImageError] = useState('');
     const [uploadError, setUploadError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
     const [resource, setFile] = useState(null);
     const [filetype, setFileType] = useState('');
     const [loader, showLoader, hideLoader] = useSpinner();
@@ -117,7 +118,9 @@ export default function Admin() {
                         setSuccessMsg('Document uploaded successfully');
                         setDocName('');
                         setDescription('');
-                        // document.getElementById('file').value = '';
+                        setSelectedOption(null);
+                        setFile(null);
+                        setFileType('')
                         setImageError('');
                         setUploadError('');
                         setTimeout(() => {
@@ -125,11 +128,13 @@ export default function Admin() {
                         }, 3000)
                     })
                     .catch((error) => {
-                        console.error('Error uploading document:', error);
                         hideLoader();
+                        setErrorMsg('Error', error);
                         setDocName('');
                         setDescription('');
-                        // document.getElementById('file').value = '';
+                        setSelectedOption(null);
+                        setFile(null);
+                        setFileType('')
                         setImageError('');
                         setUploadError('');
                         setTimeout(() => {
@@ -138,11 +143,13 @@ export default function Admin() {
                     });
             });
         }).catch((error) => {
-            console.error('Error uploading image:', error);
             hideLoader();
+            setErrorMsg('Error', error);
             setDocName('');
             setDescription('');
-            // document.getElementById('file').value = '';
+            setSelectedOption(null);
+            setFile(null);
+            setFileType('')
             setImageError('');
             setUploadError('');
             setTimeout(() => {
@@ -162,7 +169,7 @@ export default function Admin() {
         <main>
             <div >
                 <br />
-                
+
                 <h1> ADMIN PANEL</h1>
 
                 {/* <form className="form-group" onSubmit={handleLogout}>
@@ -174,9 +181,7 @@ export default function Admin() {
                     </h1>
                 </form> */}
                 <hr />
-                {successMsg && (
-                    <div className="success-msg">{successMsg}</div>
-                )}
+
                 <form autoComplete="off" className="form-group" onSubmit={uploadData}>
                     <div className="form-control">
                         <label className="label">
@@ -200,14 +205,17 @@ export default function Admin() {
                         <label className="label">
                             <span className="label-text">Document Category</span>
                         </label>
-                        <Select
-                            options={options}
-                            isSearchable
-                            required
-                            value={selectedOption}
-                            onChange={handleChange}
-                            onInputChange={handleInputChange}
-                        />
+                        <div className="text-black">
+                            <Select
+                                options={options}
+                                isSearchable
+                                required
+                                value={selectedOption}
+                                onChange={handleChange}
+                                onInputChange={handleInputChange}
+                                className="text-black" 
+                            />
+                        </div>
                     </div>
 
                     <br />
@@ -230,12 +238,14 @@ export default function Admin() {
                     </div>
                 </form>
                 <br />
-                {/* {uploadError && (
-                    <>
-                        <br />
-                        <div className="error-msg">{uploadError}</div>
-                    </>
-                )} */}
+                {successMsg && <><div className="alert alert-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{successMsg}</span>
+                </div></>}
+                {errorMsg && <><div className="alert alert-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{errorMsg}</span>
+                </div></>}
                 {loader}
             </div>
         </main>

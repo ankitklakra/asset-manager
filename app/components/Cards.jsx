@@ -10,7 +10,7 @@ export const Cards = ({ individualProduct, addToCart }) => {
         {/* <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure> */}
         <div className="card-body">
           <h2 className="card-title">
-            {individualProduct.title}
+            {individualProduct.title.toUpperCase()}
             {/* <div className="badge badge-secondary">NEW</div> */}
           </h2>
           <p> {individualProduct.description}</p>
