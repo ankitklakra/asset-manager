@@ -9,7 +9,7 @@ export default function Home() {
   const [searchterm, setSearch] = useState('');
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(10);
 
   const getProducts = async () => {
 
