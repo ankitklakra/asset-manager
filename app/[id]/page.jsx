@@ -61,22 +61,34 @@ export default function Page() {
   };
 
   return (
-    <div >
-      {copySuccess && <><div className="alert alert-success">
-        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>Link copied to clipboard!</span>
-      </div></>}
-      {errmsg && <><div className="alert alert-error">
-        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>{errmsg}</span>
-      </div></>}
+   <div >
+      <nav className="flex py-6 ps-8" aria-label="Breadcrumb">
+  <ol className="inline-flex items-center space-x-1 md:space-x-3">
+    <li className="inline-flex items-center">
+      <a href="/" className="inline-flex items-center text-sm font-medium text-black-700 hover:text-blue-600 dark:text-black-400 dark:hover:text-black">
+        <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+        </svg>
+        Home
+      </a>
+    </li>
+    <li aria-current="page" className="flex items-center">
+      <svg className="w-3 h-3 text-black-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
+      </svg>
+      <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">RESOURCES</span>
+    </li>
+  </ol>
+</nav>
+
+     
 
      
 
       
-      <p className='text-left justify-start ps-8 py-8 font-bold'>Title: {title}</p>
+      <p className='text-left justify-start ps-8 py-8 font-bold'> {title}</p>
       
-      <div className="mt-10 ml-5 mr-5 mb-5">
+      <div className=" border-4 border-sky-500 mt-10 ml-5 mr-5 mb-5 ">
         {docuri && (
           <iframe
             src={docuri}
@@ -90,10 +102,23 @@ export default function Page() {
       </div>
       <p className='text-left font-medium px-8 sm:text-center md:text-right lg:text-justify xl:text-center'>Description: {desc}</p>
       <div className='flex justify-end pr-8'>
-  <button className="btn btn-outline btn-info mr-4" onClick={handleDownload}>Download</button>
-  <button className="btn btn-outline btn-success" onClick={handleCopyLink}>Copy Link</button>
-</div>
+      <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none
+       focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
+       dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " onClick={handleDownload}>Download</button>
+      <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none 
+      focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
+      dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"onClick={handleCopyLink}>Copy Link</button>
 
+      
+</div>
+{copySuccess && <><div className="alert alert-success w-1/5">
+        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Link copied to clipboard!</span>
+      </div></>}
+      {errmsg && <><div className="alert alert-error">
+        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>{errmsg}</span>
+      </div></>}
 
     </div>
     
