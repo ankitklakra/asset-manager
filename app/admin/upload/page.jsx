@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import useSpinner from '../utils/useSpinner'
-import { auth, fs, storage } from '../config'
+import useSpinner from '../../utils/useSpinner'
+import { auth, fs, storage } from '../../config'
 import Select from 'react-select';
-import { Products2 } from '../utils/Products2';
 
 const options = [
     { value: 'book', label: 'Book' },
@@ -28,10 +27,6 @@ export default function Admin() {
     const [resource, setFile] = useState(null);
     const [filetype, setFileType] = useState('');
     const [loader, showLoader, hideLoader] = useSpinner();
-    const [searchterm, setSearch] = useState('');
-    const [products, setProducts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
 
     const [selectedOption, setSelectedOption] = useState(null);
     const [customInput, setCustomInput] = useState('');
@@ -170,118 +165,88 @@ export default function Admin() {
 
         });
     }
-    const getProducts = async () => {
-
-        const products = await fs.collection('ndocs').get();
-        const productsArray = [];
-        for (var snap of products.docs) {
-            var data = snap.data();
-            data.ID = snap.id;
-            productsArray.push({
-                ...data
-            });
-            if (productsArray.length === products.docs.length) {
-                setProducts(productsArray);
-            }
-        }
-    };
-
-    useEffect(() => {
-        getProducts();
-    }, []);
-
-    const handleSearch = async () => {
-        const lowerSearchTerm = searchterm.toLowerCase();
-
-        const querySnapshot = await fs.collection('ndocs').get();
-
-        const searchResults = querySnapshot.docs
-            .map((doc) => {
-                const data = doc.data();
-                data.ID = doc.id;
-                return {
-                    ...data,
-                    title: data.title.toLowerCase(),
-                };
-            })
-            .filter((product) => product.title.includes(lowerSearchTerm));
-
-        setProducts(searchResults);
-        setCurrentPage(1);
-    };
-    // Calculate the index range for the current page.
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(products.length / itemsPerPage); i++) {
-        pageNumbers.push(i);
-    }
-    let Product;
-    const addToCart = (product) => {
-
-    }
     return (
         <main>
             <div className="m-5" >
-                <h1> ADMIN PANEL</h1>
-                <Link href="/admin/upload">
-                    <button className="w-48 md:w-64 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
-                        Upload
-                    </button>
-                </Link>
-                <div className="mb-3 ml-5 mr-5 ">
-                    <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                        <input
-                            type="search"
-                            className="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                            placeholder="Search"
-                            aria-label="Search"
-                            aria-describedby="button-addon1"
-                            onChange={(e) => setSearch(e.target.value)} value={searchterm}
-                        />
+                <br />
 
-                        <button
-                            className="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-                            type="button"
-                            id="button-addon1"
-                            data-te-ripple-init
-                            data-te-ripple-color="light"
-                            onClick={handleSearch}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                className="h-5 w-5"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
+                <h1> ADMIN PANEL</h1>
+
+                {/* <form className="form-group" onSubmit={handleLogout}>
+                    <h1>
+                        <span className="badge bg-secondary"> Admin Panel</span>
+                        <button type="submit" className="btn btn-danger btn-md float-end">
+                            LOGOUT
+                        </button>
+                    </h1>
+                </form> */}
+                <hr />
+
+                <form autoComplete="off" className="form-group" onSubmit={uploadData}>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Document Name</span>
+                        </label>
+                        <input type="text" placeholder="name" className="input input-bordered" required
+                            onChange={(e) => setDocName(e.target.value)} value={name}></input>
+                    </div>
+                    <br />
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Document Description</span>
+                        </label>
+                        <input type="text" placeholder="description" className="input input-bordered" required
+                            onChange={(e) => setDescription(e.target.value)} value={description}></input>
+                    </div>
+
+                    <br />
+
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Document Category</span>
+                        </label>
+                        <div className="text-black">
+                            <Select
+                                options={options}
+                                isSearchable
+                                required
+                                value={selectedOption}
+                                onChange={handleChange}
+                                onInputChange={handleInputChange}
+                                className="text-black" 
+                            />
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.ppt,.pptx"
+                        className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+                        required onChange={handleFileChange} />
+
+                    {/* {imageError && (
+                        <>
+                            <br />
+                            <div className="error-msg">{imageError}</div>
+                        </>
+                    )} */}
+                    <br />
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button type="submit" className="btn btn-success btn-md">
+                            SUBMIT
                         </button>
                     </div>
-                </div>
-
-                <Products2 products={products} addToCart={addToCart} />
-
-                <ul className="pagination">
-                    {pageNumbers.map((number) => (
-                        <li key={number} className={currentPage === number ? 'active' : ''}>
-                            <button onClick={() => paginate(number)} className="page-link">
-                                {number}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-
-
-
+                </form>
+                <br />
+                {successMsg && <><div className="alert alert-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{successMsg}</span>
+                </div></>}
+                {errorMsg && <><div className="alert alert-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{errorMsg}</span>
+                </div></>}
+                {loader}
             </div>
         </main>
     )

@@ -31,33 +31,24 @@ export default function Donate() {
     const [customInput, setCustomInput] = useState('');
 
     function GetUserUid() {
-
         const [uid, setUid] = useState(null);
         useEffect(() => {
             showLoader();
             auth.onAuthStateChanged(user => {
                 if (user) {
                     setUid(user.uid);
-                    const docRef = fs.collection('Admin').doc(user.uid)
-                    docRef.get().then((doc) => {
-                        if (doc.exists) {
-                            console.log('success')
-                            hideLoader();
-                        } else {
-                            console.log('not user')
-                            router.push('/');
-                            hideLoader();
-                        }
-                    })
+                    hideLoader();
                 } else {
-                    console.log('not user')
-                    router.push('/');
+                    console.log('not logged in');
+                    router.push('/login');
                     hideLoader();
                 }
-            })
-        }, [])
+            });
+        }, []);
+    
         return uid;
     }
+    
     const uid = GetUserUid();
 
     const handleChange = (selectedOption) => {
@@ -85,7 +76,7 @@ export default function Donate() {
 
         const storageRef = storage.ref();
         const timeStamp = String(Date.now());
-        const filePathAndName = `Doc/Doc_${timeStamp}`;
+        const filePathAndName = `NDoc/NDoc_${timeStamp}`;
         const fileRef = storageRef.child(filePathAndName);
 
         //Upload Doc
@@ -96,7 +87,7 @@ export default function Donate() {
 
                 // Create a new document in the Firestore collection "docs"
                 // const db = firebase.firestore();
-                const docsRef = fs.collection('docs').doc(timeStamp);
+                const docsRef = fs.collection('ndocs').doc(timeStamp);
                 const docsRefId = docsRef.id;
 
                 // Create a data object with the fields to be stored in Firestore
@@ -107,6 +98,7 @@ export default function Donate() {
                     docid: docsRefId,
                     userid: uid,
                     title: name,
+                    approved:false,
                     description: description
                 };
 
@@ -114,7 +106,7 @@ export default function Donate() {
                 docsRef.set(data)
                     .then(() => {
                         hideLoader();
-                        setSuccessMsg('Document uploaded successfully');
+                        setSuccessMsg('Document submitted successfully');
                         setDocName('');
                         setDescription('');
                         setSelectedOption(null);
@@ -165,11 +157,11 @@ export default function Donate() {
         });
     }
     return (
-        <main>
+        <main className="m-5">
             <div >
                 <br />
 
-                <h1> ADMIN PANEL</h1>
+                <h1>Resource Sharing</h1>
 
                 {/* <form className="form-group" onSubmit={handleLogout}>
                     <h1>

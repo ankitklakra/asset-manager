@@ -111,7 +111,7 @@ export default function Home() {
           </svg>
         </button>
       </div>
-    </div>
+     </div>
 
       <Products products={products} addToCart={addToCart} />
 
