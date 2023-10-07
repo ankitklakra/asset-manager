@@ -31,7 +31,7 @@ export default function Admin() {
     const [searchterm, setSearch] = useState('');
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
+    const itemsPerPage = 5; // Number of items to display per page
 
     const [selectedOption, setSelectedOption] = useState(null);
     const [customInput, setCustomInput] = useState('');
@@ -170,8 +170,9 @@ export default function Admin() {
 
         });
     }
-    const getProducts = async () => {
 
+
+    const getProducts = async () => {
         const products = await fs.collection('ndocs').get();
         const productsArray = [];
         for (var snap of products.docs) {
@@ -180,10 +181,8 @@ export default function Admin() {
             productsArray.push({
                 ...data
             });
-            if (productsArray.length === products.docs.length) {
-                setProducts(productsArray);
-            }
         }
+        setProducts(productsArray);
     };
 
     useEffect(() => {
@@ -192,7 +191,6 @@ export default function Admin() {
 
     const handleSearch = async () => {
         const lowerSearchTerm = searchterm.toLowerCase();
-
         const querySnapshot = await fs.collection('ndocs').get();
 
         const searchResults = querySnapshot.docs
@@ -209,21 +207,19 @@ export default function Admin() {
         setProducts(searchResults);
         setCurrentPage(1);
     };
-    // Calculate the index range for the current page.
+
+    // Calculate the range of items to display based on the current page
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(products.length / itemsPerPage); i++) {
-        pageNumbers.push(i);
-    }
-    let Product;
     const addToCart = (product) => {
-
-    }
+        // Implement your cart logic here
+    };
     return (
         <main>
             <div className="m-5" >
@@ -270,18 +266,22 @@ export default function Admin() {
 
                 <Products2 products={products} addToCart={addToCart} />
 
-                <ul className="pagination">
-                    {pageNumbers.map((number) => (
-                        <li key={number} className={currentPage === number ? 'active' : ''}>
-                            <button onClick={() => paginate(number)} className="page-link">
-                                {number}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-
-
-
+                <div className="pagination pagination flex justify-center mb-4">
+                    <button
+                        className="btn btn-outline"
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Previous Page
+                    </button>
+                    <button
+                        className="btn btn-outline"
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={indexOfLastItem >= products.length}
+                    >
+                        Next Page
+                    </button>
+                </div>
             </div>
         </main>
     )

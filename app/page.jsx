@@ -1,20 +1,19 @@
-"use client";
-import React, { useState, useEffect } from 'react'
+"use client"
+import React, { useState, useEffect } from 'react';
 import Cards from "./components/Cards";
 import Navbar from "./components/Navbar";
 import { Products } from './utils/Products';
-import { auth, fs, storage } from './config'
+import { auth, fs, storage } from './config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-export default function Home() {
 
+export default function Home() {
   const [searchterm, setSearch] = useState('');
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const itemsPerPage = 5; // Number of items to display per page
 
   const getProducts = async () => {
-
     const products = await fs.collection('docs').get();
     const productsArray = [];
     for (var snap of products.docs) {
@@ -23,10 +22,8 @@ export default function Home() {
       productsArray.push({
         ...data
       });
-      if (productsArray.length === products.docs.length) {
-        setProducts(productsArray);
-      }
     }
+    setProducts(productsArray);
   };
 
   useEffect(() => {
@@ -35,7 +32,6 @@ export default function Home() {
 
   const handleSearch = async () => {
     const lowerSearchTerm = searchterm.toLowerCase();
-
     const querySnapshot = await fs.collection('docs').get();
 
     const searchResults = querySnapshot.docs
@@ -52,32 +48,24 @@ export default function Home() {
     setProducts(searchResults);
     setCurrentPage(1);
   };
-  // Calculate the index range for the current page.
+
+  // Calculate the range of items to display based on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(products.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-  let Product;
   const addToCart = (product) => {
+    // Implement your cart logic here
+  };
 
-  }
   return (
     <main>
       <Navbar />
-      {/* <Cards/> */}
-      {/* <div className="mx-auto max-w">
-        <input type="text" placeholder="Search" className="input input-bordered rounded-lg  w-full max-w-lg"
-          onChange={(e) => setSearch(e.target.value)} value={searchterm} />
-        <button className='btn btn-outline' onClick={handleSearch} >
-          Search
-        </button>
-      </div> */}
+      
       <div className="mb-3 ml-5 mr-5 ">
       <div className="relative mb-4 flex w-full flex-wrap items-stretch">
         <input
@@ -111,19 +99,25 @@ export default function Home() {
           </svg>
         </button>
       </div>
-     </div>
+      </div>
+      <Products products={currentItems} addToCart={addToCart} />
 
-      <Products products={products} addToCart={addToCart} />
-
-      <ul className="pagination">
-        {pageNumbers.map((number) => (
-          <li key={number} className={currentPage === number ? 'active' : ''}>
-            <button onClick={() => paginate(number)} className="page-link">
-              {number}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="pagination pagination flex justify-center mb-4">
+        <button
+          className="btn btn-outline"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous Page
+        </button>
+        <button
+          className="btn btn-outline"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={indexOfLastItem >= products.length}
+        >
+          Next Page
+        </button>
+      </div>
     </main>
-  )
+  );
 }
