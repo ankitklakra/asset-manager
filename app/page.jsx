@@ -71,13 +71,11 @@ export default function Home() {
     <main>
       <Navbar />
       {/* <Cards/> */}
-      <div>
-      
+      <div className="mx-auto max-w">
         <input type="text" placeholder="Search" className="input input-bordered rounded-lg  w-full max-w-lg"
           onChange={(e) => setSearch(e.target.value)} value={searchterm} />
-        <button className='pe-6 mr-4' onClick={handleSearch}>
-        <FontAwesomeIcon icon={faSearch} className='text-gray-500 mr-2' />
-        
+        <button className='btn btn-outline' onClick={handleSearch} >
+          Search
         </button>
       </div>
 
