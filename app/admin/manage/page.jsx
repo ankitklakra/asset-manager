@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import useSpinner from '../utils/useSpinner'
-import { auth, fs, storage } from '../config'
-import { Products2 } from '../utils/Products2';
-
-export default function Admin() {
+import useSpinner from '../../utils/useSpinner'
+import { auth, fs, storage } from '../../config'
+import { Products3 } from '../../utils/Products3';
+export default function Manage() {
     const router = useRouter()
 
     const [loader, showLoader, hideLoader] = useSpinner();
@@ -14,7 +13,6 @@ export default function Admin() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
-
     function GetUserUid() {
 
         const [uid, setUid] = useState(null);
@@ -46,7 +44,7 @@ export default function Admin() {
     const uid = GetUserUid();
 
     const getProducts = async () => {
-        const products = await fs.collection('ndocs').where('approved', '==', false).get();
+        const products = await fs.collection('docs').get();
         const productsArray = [];
         for (var snap of products.docs) {
             var data = snap.data();
@@ -64,8 +62,8 @@ export default function Admin() {
 
     const handleSearch = async () => {
         const lowerSearchTerm = searchterm.toLowerCase();
-        const querySnapshot = await fs.collection('ndocs').get();
-    
+        const querySnapshot = await fs.collection('docs').get();
+
         const searchResults = querySnapshot.docs
             .map((doc) => {
                 const data = doc.data();
@@ -76,11 +74,11 @@ export default function Admin() {
                 };
             })
             .filter((product) => product.title.includes(lowerSearchTerm) && !product.approved);
-    
+
         setProducts(searchResults);
         setCurrentPage(1);
     };
-    
+
 
     // Calculate the range of items to display based on the current page
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -97,17 +95,7 @@ export default function Admin() {
     return (
         <main>
             <div className="m-5" >
-                <h1> ADMIN PANEL</h1>
-                <Link href="/admin/upload">
-                    <button className="w-48 md:w-64 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
-                        Upload
-                    </button>
-                </Link>
-                <Link href="/admin/manage">
-                    <button className="w-48 md:w-64 text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
-                        Manage
-                    </button>
-                </Link>
+                <h1> Manage Resources</h1>
                 <div className="mb-3 ml-5 mr-5 ">
                     <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                         <input
@@ -143,7 +131,7 @@ export default function Admin() {
                     </div>
                 </div>
 
-                <Products2 products={products} addToCart={addToCart} />
+                <Products3 products={products} addToCart={addToCart} />
 
                 <div className="pagination pagination flex justify-center mb-4">
                     <button
