@@ -8,11 +8,9 @@ import Select from 'react-select';
 
 const options = [
     { value: 'book', label: 'Book' },
-    { value: 'doc', label: 'Doc' },
     { value: 'image', label: 'Image' },
     { value: 'notes', label: 'Notes' },
     { value: 'pdf', label: 'Pdf' },
-    { value: 'ppt', label: 'Ppt' },
     { value: 'pyq', label: 'Pyq' },
 ];
 
@@ -258,7 +256,7 @@ export default function Admin() {
 
                     <br />
 
-                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.ppt,.pptx"
+                    <input type="file" accept=".pdf,.jpg,.jpeg,.png"
                         className="file-input file-input-bordered file-input-primary w-full max-w-xs"
                         required onChange={handleFileChange} />
 
