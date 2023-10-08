@@ -126,16 +126,18 @@ export default function Admin() {
   </ol>
 </nav>
 <h1 className='flex justify-center'> ADMIN PANEL</h1>
+<div className='flex flex-col items-center m-5 sm:flex-row sm:justify-center '>
                 <Link href="/admin/upload">
-                    <button className="w-48 md:w-64 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
+                    <button className="w-48 md:w-64 m-5 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                         Upload
                     </button>
                 </Link>
                 <Link href="/admin/manage">
-                    <button className="w-48 md:w-64 text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
+                    <button className="w-48 md:w-64 m-5 text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                         Manage
                     </button>
                 </Link>
+                </div>
                 <div className="mb-3 ml-5 mr-5 ">
                     <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                         <input
