@@ -57,8 +57,8 @@ export default function Profile() {
 
   return (
     <div className=" bg-base-200">
-    <div className="container  h-screen flex flex-col">
-      <nav className="flex py-6 ps-8" aria-label="Breadcrumb">
+    <div className="w-full p-8 ">
+      <nav className="flex py-6 " aria-label="Breadcrumb">
   <ol className="inline-flex items-center space-x-1 md:space-x-3">
     <li className="inline-flex items-center">
       <a href="/" className="inline-flex items-center text-sm font-medium text-black-700 hover:text-blue-600 dark:text-black-400 dark:hover:text-black">
@@ -76,12 +76,22 @@ export default function Profile() {
     </li>
   </ol>
 </nav>
-      <h1 className="text-center mb-8">Profile</h1>
+<div className='cardcard p-8 w-full bg-base-100 shadow-xl bg-white-300'>
 
-      <div className="text-center">
+
+
+      <h1 className="text-center mb-8 font-extrabold pt-6">Profile</h1>
+
+      <div className="text-center ">
+      <div className="avatar">
+      <div className="w-48 h-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+ 
+      <img src="https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png" alt="Dummy Profile Image Jpg, HD Png Download@kindpng.com"/>
+</div>
+</div>
         {user ? (
           <>
-            <p>Welcome, {userName || "user"}</p>
+            <p className='font-semibold py-8 text-lg'>Welcome, {userName || "user"}</p>
             {isAdmin ? ( // Conditionally render the Admin button
               <div>
                 <Link href="/admin">
@@ -91,26 +101,27 @@ export default function Profile() {
                 </Link>
               </div>
             ) : (
-              <div>
+              <div className=''>
+               
                 <Link href="/donate">
-                  <button className="w-48 md:w-64 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
+                  <button className="w-45 md:w-64 sm:px-6 sm:py-3 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                     Donate
                   </button>
                 </Link>
               </div>
             )}
-            <div>
+            <div className=''>
               <button
                 onClick={handleLogout}
-                className="w-48 md:w-64 text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
-              >
+                className="w-45 sm:px-6 sm:py-3 md:w-64 text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                 Logout
               </button>
             </div>
           </>
         ) : (
           <>
-            <div>
+          <div className='py-8'>
+            <div >
               <Link href="/login">
                 <button className="w-48 md:w-64 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                   Login
@@ -124,10 +135,11 @@ export default function Profile() {
                 </button>
               </Link>
             </div>
+            </div>
           </>
         )}
       </div>
-
+      </div>
     </div>
     </div>
   );
