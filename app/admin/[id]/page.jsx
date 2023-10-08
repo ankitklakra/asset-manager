@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { auth, fs, storage } from '../../config';
 import { useRouter } from 'next/navigation'
+import { CheckCircleIcon, DownloadIcon, LinkIcon, TrashIcon } from "@heroicons/react/solid";
+
 
 export default function Page() {
 
@@ -199,7 +201,7 @@ export default function Page() {
       <svg className="w-3 h-3 text-black-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
       </svg>
-      <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">Upload</span>
+      <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">Resource </span>
     </li>
   </ol>
 </nav>
@@ -231,25 +233,52 @@ export default function Page() {
 
       </div>
       <p className='text-left font-medium px-8 sm:text-center md:text-right lg:text-justify xl:text-center'>Description: {desc}</p>
-      <div className='flex justify-end pr-8'>
 
-        <button type="button" className="text-white bg-purple-700 hover:bg-yellow-800 focus:outline-none
-       focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
-       dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 " onClick={handleApprove}>Approve</button>
+      <div className='flex justify-end' >
+  <div className='w-full sm:w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 p-3 ps-8 '>
+    <button
+      type="button"
+      className="hidden sm:inline-flex items-center text-white bg-purple-700 hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 "
+      onClick={handleApprove}
+    >
+      <CheckCircleIcon className="w-5 h-5 mr-2" /> Approve
+    </button>
+    <CheckCircleIcon className="w-5 h-5 text-purple-700 sm:hidden" />
+  </div>
 
-        <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none
-       focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
-       dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " onClick={handleDownload}>Download</button>
+  <div className='w-full sm:w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 p-3'>
+    <button
+      type="button"
+      className="hidden sm:inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+      onClick={handleDownload}
+    >
+      <DownloadIcon className="w-5 h-5 mr-2" /> Download
+    </button>
+    <DownloadIcon className="w-5 h-5 text-blue-700 sm:hidden" />
+  </div>
 
+  <div className='w-full sm:w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 p-3'>
+    <button
+      type="button"
+      className="hidden sm:inline-flex items-center text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 "
+      onClick={handleCopyLink}
+    >
+      <LinkIcon className="w-5 h-5 mr-2" /> Copy Link
+    </button>
+    <LinkIcon className="w-5 h-5 text-green-700 sm:hidden" />
+  </div>
 
-        <button type="button" className="text-white bg-green-700 hover:bg-green-800 focus:outline-none
-       focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
-       dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 " onClick={handleCopyLink}>Copy Link</button>
-
-        <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none
-       focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
-       dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 " onClick={handleDelete}>Delete</button>
-      </div>
+  <div className='w-full sm:w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 p-3'>
+    <button
+      type="button"
+      className="hidden sm:inline-flex items-center text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 "
+      onClick={handleDelete}
+    >
+      <TrashIcon className="w-5 h-5 mr-2" /> Delete
+    </button>
+    <TrashIcon className="w-5 h-5 text-red-700 sm:hidden" />
+  </div>
+</div>
 
     </div>
 
