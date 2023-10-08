@@ -56,6 +56,7 @@ export default function Page() {
     }
   };
   const handleCopyLink = () => {
+    document.getElementById('my_modal_3').showModal()
     if (docuri) {
       navigator.clipboard.writeText(docuri).then(
         function () {
@@ -184,6 +185,23 @@ export default function Page() {
     }
   };
 
+  const renderFile = () => {
+    if (docuri) {
+      if (doctype === 'pdf') {
+        return (
+          <iframe
+            src={docuri}
+            width="100%"
+            height="600px"
+            frameBorder="0"
+            title="PDF Viewer"
+          ></iframe>
+        );
+      } else if (['jpg', 'jpeg', 'png'].includes(doctype)) {
+        return <img src={docuri} width="100%" alt={title} />;
+      }
+    }
+  };
 
   return (
     <div >
@@ -224,10 +242,10 @@ export default function Page() {
           </li>
         </ol>
       </nav>
-      {copySuccess && <><div className="alert alert-success">
+      {/* {copySuccess && <><div className="alert alert-success">
         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         <span>Link copied to clipboard!</span>
-      </div></>}
+      </div></>} */}
       {errmsg && <><div className="alert alert-error">
         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         <span>{errmsg}</span>
@@ -239,18 +257,10 @@ export default function Page() {
 
       <p className='text-left justify-start ps-8 py-8 font-bold'>Title: {title}</p>
 
-      <div className="mt-10 ml-5 mr-5 mb-5">
-        {docuri && (
-          <iframe
-            src={docuri}
-            width="100%"
-            height="600px"
-            frameBorder="0"
-            title="Document Viewer"
-          ></iframe>
-        )}
-
+      <div className="border-4 border-sky-500 mt-10 ml-5 mr-5 mb-5 ">
+        {renderFile()}
       </div>
+
       <p className='text-left font-medium px-8 sm:text-center md:text-right lg:text-justify xl:text-center'>Description: {desc}</p>
 
       <div className='flex justify-end pr-8 pl-8'>
@@ -285,6 +295,17 @@ export default function Page() {
           <TrashIcon className="w-5 h-5 text-red-700 sm:hidden" />
         </div>
       </div>
+
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          {/* <h3 className="font-bold text-lg">Hello!</h3> */}
+          <p className="py-4">Link copied to clipboard!</p>
+        </div>
+      </dialog>
 
     </div>
 

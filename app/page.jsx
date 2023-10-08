@@ -4,8 +4,7 @@ import Cards from "./components/Cards";
 import Navbar from "./components/Navbar";
 import { Products } from './utils/Products';
 import { auth, fs, storage } from './config';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Home() {
   const [searchterm, setSearch] = useState('');

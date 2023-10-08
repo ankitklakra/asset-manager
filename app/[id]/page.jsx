@@ -14,7 +14,6 @@ export default function Page() {
   const [copySuccess, setCopySuccess] = useState(false);
 
   useEffect(() => {
-    // Access the current URL
     const currentUrl = window.location.href;
     const urlParts = currentUrl.split('/');
     const lastPart = urlParts[urlParts.length - 1];
@@ -50,6 +49,7 @@ export default function Page() {
   };
 
   const handleCopyLink = () => {
+    document.getElementById('my_modal_3').showModal()
     if (docuri) {
       navigator.clipboard.writeText(docuri).then(
         function () {
@@ -61,41 +61,25 @@ export default function Page() {
       );
     }
   };
- // ...
+  // ...
 
-const renderFile = () => {
-  if (docuri) {
-    if (doctype === 'pdf') {
-      return (
-        <iframe
-          src={docuri}
-          width="100%"
-          height="600px"
-          frameBorder="0"
-          title="PDF Viewer"
-        ></iframe>
-      );
-    } else if (['jpg', 'jpeg', 'png'].includes(doctype)) {
-      return <img src={docuri} alt={title} />;
-    } else if (['doc', 'docx', 'ppt', 'pptx'].includes(doctype)) {
-      console.log(`https://docs.google.com/viewer?url=${docuri}`);
-      // Use Google Docs Viewer URL for Word documents and PowerPoint presentations
-      return (
-        <iframe
-          className={doctype}
-          width="100%"
-          height="600"
-          frameBorder="0"
-          src={`https://docs.google.com/viewer?url=${docuri}`}
-        ></iframe>
-      );
+  const renderFile = () => {
+    if (docuri) {
+      if (doctype === 'pdf') {
+        return (
+          <iframe
+            src={docuri}
+            width="100%"
+            height="600px"
+            frameBorder="0"
+            title="PDF Viewer"
+          ></iframe>
+        );
+      } else if (['jpg', 'jpeg', 'png'].includes(doctype)) {
+        return <img src={docuri} width="100%" alt={title} />;
+      }
     }
-  }
-};
-
-// ...
-
-  
+  };
 
   return (
     <div >
@@ -117,7 +101,10 @@ const renderFile = () => {
           </li>
         </ol>
       </nav>
-
+      {errmsg && <><div className="alert alert-error">
+        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>{errmsg}</span>
+      </div></>}
       <p className='text-left justify-start ps-8 py-8 font-bold'> {title}</p>
 
       <div className="border-4 border-sky-500 mt-10 ml-5 mr-5 mb-5 ">
@@ -133,17 +120,18 @@ const renderFile = () => {
       focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 
       dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"onClick={handleCopyLink}>Copy Link</button>
 
-
       </div>
-      {copySuccess && <><div className="alert alert-success w-1/5">
-        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>Link copied to clipboard!</span>
-      </div></>}
-      {errmsg && <><div className="alert alert-error">
-        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>{errmsg}</span>
-      </div></>}
-
+      
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          {/* <h3 className="font-bold text-lg">Hello!</h3> */}
+          <p className="py-4">Link copied to clipboard!</p>
+        </div>
+      </dialog>
     </div>
 
   );
