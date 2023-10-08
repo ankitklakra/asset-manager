@@ -102,16 +102,16 @@ export default function Home() {
       </div>
       <Products products={currentItems} addToCart={addToCart} />
 
-      <div className="pagination pagination flex justify-center mb-4">
+      <div  className="pagination pagination flex justify-center mb-4 gap-2">
         <button
-          className="btn btn-outline"
+          className="join-item btn btn-outline ps-4 py-1"
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
         >
           Previous Page
         </button>
         <button
-          className="btn btn-outline"
+          className="join-item btn btn-outline "
           onClick={() => paginate(currentPage + 1)}
           disabled={indexOfLastItem >= products.length}
         >
