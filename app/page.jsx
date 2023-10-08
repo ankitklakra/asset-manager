@@ -22,6 +22,7 @@ export default function Home() {
         ...data
       });
     }
+    productsArray.reverse();
     setProducts(productsArray);
   };
 
@@ -40,14 +41,21 @@ export default function Home() {
         return {
           ...data,
           title: data.title.toLowerCase(),
+          description: data.description.toLowerCase(), // Include description field in the search
         };
       })
-      .filter((product) => product.title.includes(lowerSearchTerm));
+      .filter((product) => 
+        product.title.includes(lowerSearchTerm) || product.description.includes(lowerSearchTerm)
+      );
 
     setProducts(searchResults);
     setCurrentPage(1);
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
   // Calculate the range of items to display based on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -67,13 +75,15 @@ export default function Home() {
       
       <div className="mb-3 ml-5 mr-5 ">
       <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-        <input
+      <input
           type="search"
           className="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
           placeholder="Search"
           aria-label="Search"
           aria-describedby="button-addon1"
-          onChange={(e) => setSearch(e.target.value)} value={searchterm}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyPress={handleKeyPress} // Add this line
+          value={searchterm}
         />
 
         <button

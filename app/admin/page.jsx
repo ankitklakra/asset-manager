@@ -55,6 +55,7 @@ export default function Admin() {
                 ...data
             });
         }
+        productsArray.reverse();
         setProducts(productsArray);
     };
 
@@ -65,7 +66,7 @@ export default function Admin() {
     const handleSearch = async () => {
         const lowerSearchTerm = searchterm.toLowerCase();
         const querySnapshot = await fs.collection('ndocs').get();
-    
+
         const searchResults = querySnapshot.docs
             .map((doc) => {
                 const data = doc.data();
@@ -73,14 +74,19 @@ export default function Admin() {
                 return {
                     ...data,
                     title: data.title.toLowerCase(),
+                    description: data.description.toLowerCase(),
                 };
             })
-            .filter((product) => product.title.includes(lowerSearchTerm) && !product.approved);
-    
+            .filter((product) => product.title.includes(lowerSearchTerm)|| product.description.includes(lowerSearchTerm) && !product.approved);
+
         setProducts(searchResults);
         setCurrentPage(1);
     };
-    
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      };
 
     // Calculate the range of items to display based on the current page
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -97,46 +103,46 @@ export default function Admin() {
     return (
         <main>
             <div className="m-5" >
-               
+
                 <nav className="flex py-6 ps-8" aria-label="Breadcrumb">
-  <ol className="inline-flex items-center space-x-1 md:space-x-3">
-    <li className="inline-flex items-center">
-      <a href="/" className="inline-flex items-center text-sm font-medium text-black-700 hover:text-blue-600 dark:text-black-400 dark:hover:text-black">
-        <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
-        </svg>
-        Home
-      </a>
-    </li>
-    <li aria-current="page" className="flex items-center">
-      <svg className="w-3 h-3 text-black-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-      </svg>
-      <a href="/profile" className="inline-flex items-center text-sm font-medium text-black-700 hover:text-blue-600 dark:text-black-400 dark:hover:text-black">
-      <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">Profile</span>
-      </a>
-    </li>
-    <li aria-current="page" className="flex items-center">
-      <svg className="w-3 h-3 text-black-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
-      </svg>
-      
-      <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">Admin</span>
-    </li>
-  </ol>
-</nav>
-<h1 className='flex justify-center'> ADMIN PANEL</h1>
-<div className='flex flex-col items-center m-5 sm:flex-row sm:justify-center '>
-                <Link href="/admin/upload">
-                    <button className="w-48 md:w-64 m-5 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
-                        Upload
-                    </button>
-                </Link>
-                <Link href="/admin/manage">
-                    <button className="w-48 md:w-64 m-5 text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
-                        Manage
-                    </button>
-                </Link>
+                    <ol className="inline-flex items-center space-x-1 md:space-x-3">
+                        <li className="inline-flex items-center">
+                            <a href="/" className="inline-flex items-center text-sm font-medium text-black-700 hover:text-blue-600 dark:text-black-400 dark:hover:text-black">
+                                <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                                </svg>
+                                Home
+                            </a>
+                        </li>
+                        <li aria-current="page" className="flex items-center">
+                            <svg className="w-3 h-3 text-black-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <a href="/profile" className="inline-flex items-center text-sm font-medium text-black-700 hover:text-blue-600 dark:text-black-400 dark:hover:text-black">
+                                <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">Profile</span>
+                            </a>
+                        </li>
+                        <li aria-current="page" className="flex items-center">
+                            <svg className="w-3 h-3 text-black-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
+                            </svg>
+
+                            <span className="ml-1 text-sm font-medium text-black-500 md:ml-2 dark:text-black-400">Admin</span>
+                        </li>
+                    </ol>
+                </nav>
+                <h1 className='flex justify-center'> ADMIN PANEL</h1>
+                <div className='flex flex-col items-center m-5 sm:flex-row sm:justify-center '>
+                    <Link href="/admin/upload">
+                        <button className="w-48 md:w-64 m-5 text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
+                            Upload
+                        </button>
+                    </Link>
+                    <Link href="/admin/manage">
+                        <button className="w-48 md:w-64 m-5 text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
+                            Manage
+                        </button>
+                    </Link>
                 </div>
                 <div className="mb-3 ml-5 mr-5 ">
                     <div className="relative mb-4 flex w-full flex-wrap items-stretch">
@@ -146,7 +152,9 @@ export default function Admin() {
                             placeholder="Search"
                             aria-label="Search"
                             aria-describedby="button-addon1"
-                            onChange={(e) => setSearch(e.target.value)} value={searchterm}
+                            onChange={(e) => setSearch(e.target.value)}
+                            onKeyPress={handleKeyPress} // Add this line
+                            value={searchterm}
                         />
 
                         <button
