@@ -2,7 +2,7 @@
 import React from 'react'
 import { auth, fs, storage } from '../config'
 import Link from 'next/link';
-import img from '../images/logo2.png';
+
 
 export default function Navbar() {
     const handleLogout = () => {
