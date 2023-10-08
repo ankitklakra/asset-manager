@@ -173,7 +173,7 @@ export default function Admin() {
 
 
     const getProducts = async () => {
-        const products = await fs.collection('ndocs').get();
+        const products = await fs.collection('ndocs').where('approved', '==', false).get();
         const productsArray = [];
         for (var snap of products.docs) {
             var data = snap.data();
@@ -192,7 +192,7 @@ export default function Admin() {
     const handleSearch = async () => {
         const lowerSearchTerm = searchterm.toLowerCase();
         const querySnapshot = await fs.collection('ndocs').get();
-
+    
         const searchResults = querySnapshot.docs
             .map((doc) => {
                 const data = doc.data();
@@ -202,11 +202,12 @@ export default function Admin() {
                     title: data.title.toLowerCase(),
                 };
             })
-            .filter((product) => product.title.includes(lowerSearchTerm));
-
+            .filter((product) => product.title.includes(lowerSearchTerm) && !product.approved);
+    
         setProducts(searchResults);
         setCurrentPage(1);
     };
+    
 
     // Calculate the range of items to display based on the current page
     const indexOfLastItem = currentPage * itemsPerPage;
