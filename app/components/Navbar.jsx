@@ -2,7 +2,8 @@
 import React from 'react'
 import { auth, fs, storage } from '../config'
 import Link from 'next/link';
-
+import logo from '../../public/images/logo.png'
+import Image from 'next/image';
 
 export default function Navbar() {
     const handleLogout = () => {
@@ -17,7 +18,7 @@ export default function Navbar() {
             <div className="navbar bg-base-100">
                 
                <div className='flex-1'>  
-            <img className='m-5' src="https://firebasestorage.googleapis.com/v0/b/studysharenit.appspot.com/o/logo3.png?alt=media&token=a0fd079d-db10-4ff8-8adb-7bf95da7cdc7&_gl=1*4amk3y*_ga*MTc1ODI1NDk3My4xNjYyNzk1Nzk5*_ga_CW55HF8NVT*MTY5Njc5MTUyNC44Ny4xLjE2OTY3OTI2MTAuNDQuMC4w " alt="Logo" />
+            <Image className='m-5' src={logo} alt="Logo" />
             </div>  
                 <div className="flex-none gap-2">
                     {/* <div className="form-control">

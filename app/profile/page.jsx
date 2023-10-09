@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { auth, fs } from '../config';
+import proimg from '../../public/images/pp2.jpg'
+import Image from 'next/image';
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -86,7 +88,7 @@ export default function Profile() {
       <div className="avatar">
       <div className="w-48 h-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
  
-      <img src="https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png" alt="Dummy Profile Image Jpg, HD Png Download@kindpng.com"/>
+      <Image src={proimg} alt="Profile Image Jpg"/>
 </div>
 </div>
         {user ? (

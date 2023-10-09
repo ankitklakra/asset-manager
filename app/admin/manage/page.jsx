@@ -139,7 +139,7 @@ export default function Manage() {
                 </ol>
             </nav>
             <div className="m-5" >
-                <h1> Manage Resources</h1>
+            <h1 className='flex justify-center m-5 text-2xl font-bold'>Manage Resources</h1>
                 <div className="mb-3 ml-5 mr-5 ">
                     <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                         <input
