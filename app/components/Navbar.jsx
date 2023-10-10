@@ -8,18 +8,24 @@ import Image from 'next/image';
 export default function Navbar() {
     const handleLogout = () => {
         auth.signOut().then(() => {
-            
+
         }).catch(function (error) {
-           
+
         });
     }
     return (
         <main>
             <div className="navbar bg-base-100">
-                
-               <div className='flex-1'>  
-            <Image className='m-5' src={logo} alt="Logo" />
-            </div>  
+
+                <div className='flex-1'>
+                    <Image className='m-5' src={logo} alt="Logo" />
+                </div>
+                <div className="flex-none">
+                    <ul className="menu menu-horizontal px-1">
+                        <li><Link href="/">Home</Link></li>
+                        <li><Link href="/aboutus">About</Link></li>
+                    </ul>
+                </div>
                 <div className="flex-none gap-2">
                     {/* <div className="form-control">
                         <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
@@ -27,9 +33,10 @@ export default function Navbar() {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                              <Link href="/profile"> <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" /> </Link> 
+                                <Link href="/profile"> <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" /> </Link>
                             </div>
                         </label>
+
                         {/* <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                             <li>
                                 <a className="justify-between">
