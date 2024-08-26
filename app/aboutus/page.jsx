@@ -2,11 +2,14 @@
 import React from 'react';
 import konsimg from '../../public/images/kons.png'
 import Image from 'next/image'
+import image1 from '../../public/images/ankit_l.jpeg'
+import image2 from '../../public/images/ankit_p.jpeg'
+import image3 from '../../public/images/govind.jpg'
+
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
 
 export default function Aboutus() {
-
   return (
     <main>
       <Navbar />
@@ -58,7 +61,7 @@ export default function Aboutus() {
             </div>
             <div class="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <div class="bg-white overflow-hidden shadow rounded-lg">
-                <Image width="500" height="500" src="https://media.licdn.com/dms/image/D5603AQH7LpmkeQhSew/profile-displayphoto-shrink_800_800/0/1691935317507?e=1702512000&v=beta&t=G3xo_cSMoN-s0iRYg9WoI89lQuNNItlrHLC9qTsVyC4" alt="Team Member 1" class="w-full h-64 object-cover" />
+                <Image width="500" height="500" src={image1} alt="Team Member 1" class="w-full h-64 object-cover" />
                 <div class="px-6 py-4">
                   <h3 class="text-lg font-semibold text-gray-800">Ankit Lakra</h3>
                   <p class="text-gray-600">Full Stack</p>
@@ -72,7 +75,7 @@ export default function Aboutus() {
                 </div>
               </div>
               <div class="bg-white overflow-hidden shadow rounded-lg">
-                <Image width="500" height="500" src="https://media.licdn.com/dms/image/D4D35AQE-RfXm_c38wQ/profile-framedphoto-shrink_800_800/0/1668793956410?e=1697544000&v=beta&t=ha39aiADHCsUhlD3dhkBHh8U0eTTex6dn_wbtKUi5zo" alt="Team Member 2" class="w-full h-64 object-cover" />
+                <Image width="500" height="500" src={image2} alt="Team Member 2" class="w-full h-64 object-cover" />
                 <div class="px-6 py-4">
                   <h3 class="text-lg font-semibold text-gray-800">Ankit Pandey</h3>
                   <p class="text-gray-600">Designing</p>
@@ -86,7 +89,7 @@ export default function Aboutus() {
                 </div>
               </div>
               <div class="bg-white overflow-hidden shadow rounded-lg">
-                <Image width="500" height="500" src="https://media.licdn.com/dms/image/D4D03AQFegl_80cA7bw/profile-displayphoto-shrink_800_800/0/1696274306485?e=1702512000&v=beta&t=2A3gdaXy0VSwn8NgDfdSFwOrY69WLGD0pCeGMR7XmuE" alt="Team Member 3" class="w-full h-64 object-cover" />
+                <Image width="500" height="500" src={image3} alt="Team Member 3" class="w-full h-64 object-cover" />
                 <div class="px-6 py-4 ">
                   <h3 class="text-lg font-semibold text-gray-800">Govind Purty</h3>
                   <p class="text-gray-600">Front-End</p>
