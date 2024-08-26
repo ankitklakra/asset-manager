@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Study Share Hub
 
-## Getting Started
+**Selected as one of the top 10 teams in college for proposing this innovative web-based application, which simplifies students' access to study resources.** [website link](https://studysharehub.netlify.app/)
 
-First, run the development server:
+## Overview
+Study Share Hub is a web application designed to streamline the process of sharing and accessing study materials for students. The application was developed as a prototype within 48 hours using Next.js, Tailwind CSS, Firebase, Node.js, and deployed on Netlify.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Key Features
+1. **Resource Sharing via Links**: Users can easily share resources by generating shareable links, which others can use to download the materials.
+2. **Direct Resource Donation**: Registered users can directly donate study materials to the admin via the website.
+3. **Bookmark Section**: A dedicated section allows users to bookmark resources they find useful for quick access later.
+4. **Search Functionality**: A search bar enables users to find specific study materials, previous year questions (PYQs), notes, and books.
+5. **Document Preview**: Users can preview documents and resources before downloading, ensuring they get exactly what they need.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
+- **Frontend**: Next.js, Tailwind CSS
+- **Backend**: Node.js, Firebase
+- **Deployment**: Netlify
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Installation and Setup
+To get a local copy up and running, follow these simple steps.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Prerequisites
+- Node.js installed on your local machine.
+- Firebase account with a configured project.
 
-## Learn More
+### Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/ankitklakra/asset-manager.git
+    cd asset-manager
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install NPM packages:
+    ```bash
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up Firebase:
+    - Go to your Firebase console.
+    - Set up Firestore and Firebase Storage.
+    - Get your Firebase configuration and add it to the `config.js` file.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. Run the application:
+    ```bash
+    npm run dev
+    ```
+   The application will start on `http://localhost:3000`.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
+If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Fork the project.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
+
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
+
